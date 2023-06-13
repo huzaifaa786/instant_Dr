@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instant_doctor/static/button.dart';
+import 'package:instant_doctor/values/colors.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -43,7 +44,10 @@ class _IntroScreenState extends State<IntroScreen> {
               ),
             ),
           ),
-          LargeButton(title: 'Get Started', )
+          Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: LargeButtons(title: 'Get Started',color: mainColor,screenRatio: 0.5, textcolor: Colors.white,),
+          )
         ],
       )),
     );

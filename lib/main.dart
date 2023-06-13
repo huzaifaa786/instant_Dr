@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/screen/home/home.dart';
 import 'package:instant_doctor/screen/intro/intro.dart';
 import 'package:instant_doctor/screen/Settings/setting_screen.dart';
 
@@ -31,10 +32,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Klicks",
-      initialRoute: 'intro',
+      initialRoute: 'home',
       routes: {
         'intro': (context) => const IntroScreen(),
-
+        'home': (context) => const HomeScreen(),
         'setting': (context) => const SettingScreen(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
