@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/static/inputfield.dart';
+import 'package:instant_doctor/static/button.dart';
+import 'package:instant_doctor/values/colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Center(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 child: Text(
@@ -21,31 +26,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
                 ),
               ),
-              Container(
+              Container(padding: EdgeInsets.only(bottom: 66,top: 8),
                 child: Text(
                   'Login now for find doctor',
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17,color: Color.fromARGB(255, 29, 132, 33)),
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.grey[300],
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    hintText: 'Enter Your Phone #:',
-                    
-                    hintStyle:
-                        TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 21),
+                child: InputField(
+                  hint: 'Enter Your Phone #',
+                ),
+              ),
+              InputField(
+                hint: 'Enter Your Password:',
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10,top: 28),
+                child: LargeButtons(
+                  title: 'Login',
+                  color: mainColor,
+                  screenRatio: 0.7,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 19),
+                child: Text(
+                  'For Register Click here',
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
                 ),
               ),
             ],
