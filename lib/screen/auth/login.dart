@@ -16,8 +16,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 child: Text(
@@ -25,20 +26,31 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
                 ),
               ),
-              Container(
+              Container(padding: EdgeInsets.only(bottom: 66,top: 8),
                 child: Text(
                   'Login now for find doctor',
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17,color: Color.fromARGB(255, 29, 132, 33)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 21),
+                child: InputField(
+                  hint: 'Enter Your Phone #',
                 ),
               ),
               InputField(
-                hint: 'Enter Your Phone #',
-              ),
-               InputField(
                 hint: 'Enter Your Password:',
               ),
-               LargeButtons(title: 'Login', color: mainColor,),
- Container(padding: EdgeInsets.only(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10,top: 28),
+                child: LargeButtons(
+                  title: 'Login',
+                  color: mainColor,
+                  screenRatio: 0.7,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 19),
                 child: Text(
                   'For Register Click here',
                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),

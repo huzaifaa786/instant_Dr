@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/screen/auth/signup.dart';
 import 'package:instant_doctor/screen/home/home.dart';
 import 'package:instant_doctor/screen/auth/login.dart';
 import 'package:instant_doctor/screen/intro/intro.dart';
@@ -33,11 +34,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Klicks",
-      initialRoute: 'login',
+      initialRoute: 'signup',
       routes: {
         'intro': (context) => const IntroScreen(),
         'login': (context) => const LoginScreen(),
         'setting': (context) => const SettingScreen(),
+        'signup':(context) => const SignUpScreen(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),
