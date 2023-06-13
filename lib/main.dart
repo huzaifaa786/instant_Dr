@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instant_doctor/screen/intro/intro.dart';
+import 'package:instant_doctor/screen/Settings/setting_screen.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -33,6 +34,8 @@ class _MyAppState extends State<MyApp> {
       initialRoute: 'intro',
       routes: {
         'intro': (context) => const IntroScreen(),
+
+        'setting': (context) => const SettingScreen(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),
