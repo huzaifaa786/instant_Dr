@@ -43,8 +43,7 @@ class LargeButtons extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  color: textcolor,
-                  fontFamily: 'Poppins',
+                  color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
