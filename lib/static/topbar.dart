@@ -12,7 +12,7 @@ class Topbar extends StatelessWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: SvgPicture.asset('assets/images/backArrow.svg'),
+          child: FittedBox(fit: BoxFit.scaleDown,child: SvgPicture.asset('assets/images/backArrow.svg',height: 30)),
         ),
       ],
     );
