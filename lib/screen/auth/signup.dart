@@ -19,7 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(padding: EdgeInsets.only(top: 20),
+              Container(padding: EdgeInsets.only(top: 20),margin: EdgeInsets.only(top: 40),
                   child: Text(
                     'Welcome, on Instant Dr.',
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
@@ -72,7 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Container(
                   padding: EdgeInsets.only(top: 5),
                   child: Text(
-                    'For Register Click here',
+                    'For login Click here',
                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
                   ),
                 ),
