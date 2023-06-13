@@ -33,11 +33,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Klicks",
-      initialRoute: 'login',
+      initialRoute: 'home',
       routes: {
         'intro': (context) => const IntroScreen(),
         'login': (context) => const LoginScreen(),
         'setting': (context) => const SettingScreen(),
+         'home': (context) => const HomeScreen(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),
