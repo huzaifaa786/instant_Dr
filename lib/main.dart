@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/screen/auth/signup.dart';
+import 'package:instant_doctor/screen/doctor_list/doctor_list.dart';
 import 'package:instant_doctor/screen/home/home.dart';
 import 'package:instant_doctor/screen/auth/login.dart';
 import 'package:instant_doctor/screen/intro/intro.dart';
@@ -38,6 +40,8 @@ class _MyAppState extends State<MyApp> {
         'intro': (context) => const IntroScreen(),
         'login': (context) => const LoginScreen(),
         'setting': (context) => const SettingScreen(),
+         'home': (context) => const HomeScreen(),
+          'list': (context) => const DoctorList(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),
