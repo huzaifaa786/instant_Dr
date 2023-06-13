@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/static/inputfield.dart';
+import 'package:instant_doctor/static/button.dart';
+import 'package:instant_doctor/values/colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,7 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Column(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 child: Text(
@@ -27,25 +31,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.grey[300],
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    hintText: 'Enter Your Phone #:',
-                    
-                    hintStyle:
-                        TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
-                  ),
+              InputField(
+                hint: 'Enter Your Phone #',
+              ),
+               InputField(
+                hint: 'Enter Your Password:',
+              ),
+               LargeButton(title: 'Login', color: mainColor,),
+ Container(padding: EdgeInsets.only(),
+                child: Text(
+                  'For Register Click here',
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
                 ),
               ),
             ],
