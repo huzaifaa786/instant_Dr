@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/screen/intro/intro.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -29,9 +30,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Klicks",
-      initialRoute: 'splash',
+      initialRoute: 'intro',
       routes: {
-        // 'splash': (context) => const SplashScreen(),
+        'intro': (context) => const IntroScreen(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),
