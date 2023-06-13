@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/screen/home/home.dart';
 import 'package:instant_doctor/screen/auth/login.dart';
 import 'package:instant_doctor/screen/intro/intro.dart';
 import 'package:instant_doctor/screen/Settings/setting_screen.dart';
