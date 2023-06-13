@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/screens/auth/login.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -29,9 +30,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Klicks",
-      initialRoute: 'splash',
+      initialRoute: 'login',
       routes: {
-        // 'splash': (context) => const SplashScreen(),
+        'login': (context) => const LoginScreen(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),
