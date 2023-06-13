@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                InputField(
                 hint: 'Enter Your Password:',
               ),
-               LargeButton(title: 'Login', color: mainColor,),
+               LargeButtons(title: 'Login', color: mainColor,),
  Container(padding: EdgeInsets.only(),
                 child: Text(
                   'For Register Click here',
