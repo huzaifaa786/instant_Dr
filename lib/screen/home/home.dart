@@ -1,8 +1,13 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instant_doctor/api/Specialty.dart';
+import 'package:instant_doctor/model/speciality.dart';
 import 'package:instant_doctor/static/button.dart';
+import 'package:instant_doctor/static/drop_down.dart';
 import 'package:instant_doctor/static/roundedbutton.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,6 +18,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<dynamic> specialities = [];
+  Speciality? speciality;
+
+  getspeciality() async {
+    specialities = [];
+    var mcities = await SpecialityApi.getcities();
+    setState(() {
+      specialities = mcities;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      getspeciality();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 13,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.40,
+              height: MediaQuery.of(context).size.height * 0.45,
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -94,33 +118,57 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 30,),
-                    Text(
-                      'Our Services',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: Colors.black),
-                    ),
-                    LargeButtonss(
-                      title: 'Search by Doctors & Hospital',
-                       icon: Icons.search_outlined,
-                    ),
-                    LargeButtonss(
-                      title: 'My Appointments',
-                     icon: Icons.arrow_circle_right_rounded,
-                      
-                      
-                      
-                    ),
-                    LargeButtonss(
-                      title: 'Book Ambulance',
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        'Search Doctor By Speciality',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: Colors.black),
+                      ),
+                      DropdownField(
+                        text: 'Choose Speciality',
+                        selectedvalue: speciality,
+                        items: specialities.toList(),
+                        onChange: (value) {
+                          setState(() {
+                            speciality = value;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 14),
+                      Center(
+                        child: LargeButtons(
+                          title: 'Find Doctor',
+                          onPressed: (){},
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'Our Services',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: Colors.black),
+                      ),
+                      LargeButtonss(
+                        title: 'My Appointments',
                         icon: Icons.arrow_circle_right_rounded,
-                    )
-                  ],
+                        onPressed: (){},
+                      ),
+                      // LargeButtonss(
+                      //   title: 'Book Ambulance',
+                      //   icon: Icons.arrow_circle_right_rounded,
+                      //   onPressed: (){},
+                      // )
+                    ],
+                  ),
                 ),
               ),
             ),
