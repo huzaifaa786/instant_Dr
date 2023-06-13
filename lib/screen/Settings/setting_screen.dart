@@ -15,8 +15,9 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 12.0, right: 15, left: 15),
+        child: Container(
+          padding: const EdgeInsets.only(top: 12.0, right: 20, left: 20),
+          height: MediaQuery.of(context).size.height,
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [

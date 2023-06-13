@@ -6,15 +6,18 @@ class Topbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: FittedBox(fit: BoxFit.scaleDown,child: SvgPicture.asset('assets/images/backArrow.svg',height: 30)),
-        ),
-      ],
+    return SizedBox(
+      height: 50,
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: SvgPicture.asset('assets/images/backArrow.svg',height: 30),
+          ),
+        ],
+      ),
     );
   }
 }
