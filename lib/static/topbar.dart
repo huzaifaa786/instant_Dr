@@ -6,18 +6,15 @@ class Topbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Row(
-        children: [
-          InkWell(
-            onTap: (){
-              Navigator.pop(context);
-            },
-            child: SvgPicture.asset('assets/images/backArrow.svg'),
-          ),
-        ],
-      )),
+    return Row(
+      children: [
+        InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: SvgPicture.asset('assets/images/backArrow.svg'),
+        ),
+      ],
     );
   }
 }

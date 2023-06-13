@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/screen/Settings/setting_screen.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -28,10 +29,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Klicks",
-      initialRoute: 'splash',
+      title: "Intant_Dr",
+      initialRoute: 'setting',
       routes: {
-        // 'splash': (context) => const SplashScreen(),
+        'setting': (context) => const SettingScreen(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),
