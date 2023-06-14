@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:instant_doctor/helpers/loading.dart';
 import 'package:instant_doctor/screen/auth/signup.dart';
+import 'package:instant_doctor/screen/bookappointment/bookappointment.dart';
 import 'package:instant_doctor/screen/doctor_list/doctor_list.dart';
 import 'package:instant_doctor/screen/home/home.dart';
 import 'package:instant_doctor/screen/auth/login.dart';
@@ -39,7 +40,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
       title: "Klicks",
-      initialRoute: 'splash',
+      initialRoute: 'bookappointment',
       routes: {
         'intro': (context) => const IntroScreen(),
         'splash': (context) => const SplashScreen(),
@@ -48,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         'signup':(context) => const SignUpScreen(),
         'home': (context) => const HomeScreen(),
         'list': (context) => const DoctorList(),
-        
+        'bookappointment':(context) => const BookAppointment(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),
