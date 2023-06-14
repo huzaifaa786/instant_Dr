@@ -1,11 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instant_doctor/api/Specialty.dart';
+import 'package:instant_doctor/api/auth.dart';
+import 'package:instant_doctor/api/specialty.dart';
+import 'package:instant_doctor/model/doctor.dart';
 import 'package:instant_doctor/model/speciality.dart';
+import 'package:instant_doctor/screen/auth/login.dart';
 import 'package:instant_doctor/static/button.dart';
 import 'package:instant_doctor/static/drop_down.dart';
 import 'package:instant_doctor/static/roundedbutton.dart';
@@ -20,12 +20,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<dynamic> specialities = [];
   Speciality? speciality;
+  List<dynamic> doctors = [];
+  Doctor? doctor;
 
   getspeciality() async {
     specialities = [];
-    var mcities = await SpecialityApi.getcities();
+    var mspecialities = await SpecialityApi.getspecialities();
     setState(() {
-      specialities = mcities;
+      specialities = mspecialities;
+    });
+  }
+
+  getdoctors(id) async {
+    var mDoctors = await SpecialityApi.getdoctor(id);
+    setState(() {
+      doctor = null;
+      doctors = mDoctors;
     });
   }
 
@@ -101,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 13,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.45,
+              height: MediaQuery.of(context).size.height * 0.5,
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -139,14 +149,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         onChange: (value) {
                           setState(() {
                             speciality = value;
+                            doctors = [];
                           });
+                          getdoctors(value.id);
                         },
                       ),
                       SizedBox(height: 14),
                       Center(
                         child: LargeButtons(
                           title: 'Find Doctor',
-                          onPressed: (){},
+                          onPressed: () {},
                         ),
                       ),
                       SizedBox(height: 20),
@@ -160,13 +172,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       LargeButtonss(
                         title: 'My Appointments',
                         icon: Icons.arrow_circle_right_rounded,
-                        onPressed: (){},
+                        onPressed: () {},
                       ),
-                      // LargeButtonss(
-                      //   title: 'Book Ambulance',
-                      //   icon: Icons.arrow_circle_right_rounded,
-                      //   onPressed: (){},
-                      // )
+                      LargeButtonss(
+                        title: 'Logout',
+                        icon: Icons.logout_outlined,
+                        onPressed: () async {
+                          await AuthApi.logout();
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()),
+                              (Route<dynamic> route) => false);
+                        },
+                      )
                     ],
                   ),
                 ),

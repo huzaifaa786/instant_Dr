@@ -1,4 +1,10 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:instant_doctor/api/auth.dart';
+import 'package:instant_doctor/screen/auth/signup.dart';
+import 'package:instant_doctor/screen/home/home.dart';
 import 'package:instant_doctor/static/inputfield.dart';
 import 'package:instant_doctor/static/button.dart';
 import 'package:instant_doctor/values/colors.dart';
@@ -11,6 +17,23 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  login() async {
+    if (emailController.text == '' || passwordController.text == '') {
+      Fluttertoast.showToast(msg: 'Fill out all the Fields. Invalid!');
+    } else {
+      if (await AuthApi.login(
+        emailController.text.toString(),
+        passwordController.text.toString(),
+      )) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,34 +49,55 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
                 ),
               ),
-              Container(padding: EdgeInsets.only(bottom: 66,top: 8),
+              Container(
+                padding: EdgeInsets.only(bottom: 66, top: 8),
                 child: Text(
                   'Login now for find doctor',
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17,color: Color.fromARGB(255, 29, 132, 33)),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 17,
+                      color: Color.fromARGB(255, 29, 132, 33)),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 21),
                 child: InputField(
-                  hint: 'Enter Your Phone #',
+                  hint: 'Enter Your Email:',
+                  controller: emailController,
+                  type: TextInputType.emailAddress,
+
                 ),
               ),
               InputField(
                 hint: 'Enter Your Password:',
+                obscure: true,
+                controller: passwordController,
+
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 10,top: 28),
+                padding: const EdgeInsets.only(bottom: 10, top: 28),
                 child: LargeButtons(
                   title: 'Login',
                   color: mainColor,
                   screenRatio: 0.7,
+                  onPressed: () {
+                    login();
+                  },
                 ),
               ),
               Container(
                 padding: EdgeInsets.only(top: 19),
-                child: Text(
-                  'For Register Click here',
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignUpScreen()));
+                  },
+                  child: Text(
+                    'For Register Click here',
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17),
+                  ),
                 ),
               ),
             ],
