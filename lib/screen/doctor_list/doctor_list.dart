@@ -92,7 +92,7 @@ class _DoctorListState extends State<DoctorList> {
                       color: Colors.grey,
                       blurRadius: 1.0,
                       spreadRadius: 1,
-                      offset: Offset(0, -3),
+                      offset: Offset(0, -2),
                     ),
                   ]),
               child: Padding(

@@ -39,11 +39,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
       title: "Klicks",
-<<<<<<< HEAD
-      initialRoute: 'list',
-=======
       initialRoute: 'splash',
->>>>>>> 62b2a967f828363b9e4f301746ab5db2f20b9516
       routes: {
         'intro': (context) => const IntroScreen(),
         'splash': (context) => const SplashScreen(),
