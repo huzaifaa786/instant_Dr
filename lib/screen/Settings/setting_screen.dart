@@ -57,12 +57,41 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               SettingTile(
                 text: 'Logout',
-                ontap: () {},
+                ontap: () {
+                  showAlertDialog(context);
+                },
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      title: const Text("Are You Sure want to logout?"),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              child: const Text("YES"),
+              onPressed: () {},
+            ),
+            TextButton(
+              child: const Text("No"),
+              onPressed: () {},
+            )
+          ],
+        )
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
