@@ -47,8 +47,6 @@ class _MyAppState extends State<MyApp> {
         'setting': (context) => const SettingScreen(),
         'signup':(context) => const SignUpScreen(),
         'home': (context) => const HomeScreen(),
-        'list': (context) => const DoctorList(),
-        
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),

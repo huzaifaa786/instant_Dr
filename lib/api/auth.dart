@@ -6,6 +6,7 @@ import 'package:instant_doctor/helpers/loading.dart';
 import 'package:instant_doctor/helpers/shared_pref.dart';
 import 'package:instant_doctor/model/User.dart';
 import 'package:instant_doctor/values/url.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthApi {
@@ -62,25 +63,49 @@ class AuthApi {
     }
   }
 
-  // static getuser() async {
-  //   LoadingHelper.show();
-  //   var url = BASE_URL + 'getuser';
-  //   var data;
-  //   final prefs = await SharedPreferences.getInstance();
-  //   print(prefs.getString('api_token'));
-  //   data = {'api_token': prefs.getString('api_token')!};
+  static getuser() async {
+    LoadingHelper.show();
+    var url = BASE_URL + 'user/get';
+    var data;
+    final prefs = await SharedPreferences.getInstance();
+    print(prefs.getString('api_token'));
+    data = {'api_token': prefs.getString('api_token')!};
 
-  //   var response = await Api.execute(url: url, data: data);
-  //   LoadingHelper.dismiss();
-  //   if (!response['error']) {
-  //     User? user = User(response['user']);
-  //     print(user);
-  //     return user;
-  //   } else {
-  //     Fluttertoast.showToast(msg: response['error_data']);
-  //     return false;
-  //   }
-  // }
+    var response = await Api.execute(url: url, data: data);
+    LoadingHelper.dismiss();
+    if (!response['error']) {
+      User? user = User(response['user']);
+      print(user);
+      return user;
+    } else {
+      Fluttertoast.showToast(msg: response['error_data']);
+      return false;
+    }
+  }
+
+    static changeposward(password, newPassword) async {
+    LoadingHelper.show();
+    final prefs = await SharedPreferences.getInstance();
+    print(prefs.getString('api_token'));
+    var url = BASE_URL + 'changepasworduser';
+    var data;
+    data = {
+      'api_token': prefs.getString('api_token'),
+      'password': password.text,
+      'newpassword': newPassword.text
+    };
+
+    var response = await Api.execute(url: url, data: data);
+
+    LoadingHelper.dismiss();
+    if (response['error'] == false) {
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: response['error']);
+      return false;
+    }
+  }
+
 
   // static getorder() async {
   //   LoadingHelper.show();

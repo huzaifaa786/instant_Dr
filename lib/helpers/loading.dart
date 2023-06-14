@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:instant_doctor/values/colors.dart';
 
 class LoadingHelper {
   static bool absorbClick = false;
@@ -26,9 +27,9 @@ class LoadingHelper {
       ..radius = 10.0
       ..progressColor = Colors.white
       ..backgroundColor = Colors.transparent
-      ..indicatorColor = Colors.blue
-      ..textColor = Colors.blue
-      ..maskColor = Colors.blue.withOpacity(0.5)
+      ..indicatorColor = mainColor
+      ..textColor = mainColor
+      ..maskColor = mainColor.withOpacity(0.5)
       ..userInteractions = false
       ..dismissOnTap = false
       ..boxShadow = <BoxShadow>[];

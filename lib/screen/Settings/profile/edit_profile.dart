@@ -1,14 +1,14 @@
 // ignore_for_file: prefer_const_constructors, unused_element
 
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/screen/Settings/profile/edit_model.dart';
 import 'package:instant_doctor/screen/Settings/profile/succesfully_update.dart';
 import 'package:instant_doctor/static/button.dart';
-import 'package:instant_doctor/static/inputField.dart';
 import 'package:instant_doctor/static/inputfield2.dart';
 import 'dart:ui' as ui;
-// import 'package:instant_doctor/static/';
 import 'package:instant_doctor/static/topbar.dart';
 import 'package:instant_doctor/values/colors.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -114,6 +114,26 @@ class _EditProfileState extends State<EditProfile> {
                                 controller: locationController,
                                 // type: TextInputType.number,
                               ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 12.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        ChangePassword(context);
+                                      },
+                                      child: Text(
+                                        "Change Password",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            color: mainColor),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               SizedBox(height: 30),
                               LargeButtons(
                                 title: 'Update',
@@ -138,5 +158,15 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
     );
+  }
+
+  ChangePassword(context) {
+    Alert(context: context, content: EditModel(), buttons: [
+      DialogButton(
+          height: 0,
+          color: Colors.white,
+          onPressed: () async {},
+          child: Text(''))
+    ]).show();
   }
 }
