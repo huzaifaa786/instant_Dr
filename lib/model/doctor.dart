@@ -8,7 +8,6 @@ class Doctor {
   String? phone;
   String? image;
   String? location;
-  String? speciality;
   String? end_time;
   String? start_time;
   Map<String, bool>? days;
@@ -23,8 +22,6 @@ class Doctor {
   Doctor(doctor) {
     id = doctor['id'];
     name = doctor['name'];
-    print(name);
-    // speciality = doctor['speciality_id'];
     start_time = doctor['start_time'];
     apiToken = doctor['api_token'] ?? '';
     end_time = doctor['end_time'];
