@@ -9,6 +9,7 @@ import 'package:instant_doctor/screen/auth/login.dart';
 import 'package:instant_doctor/screen/intro/intro.dart';
 import 'package:instant_doctor/screen/Settings/setting_screen.dart';
 import 'package:instant_doctor/screen/splash_screen/splash.dart';
+import 'package:intl/date_symbol_data_file.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -40,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
       title: "Klicks",
-      initialRoute: 'splash',
+      initialRoute: 'bookappointment',
       routes: {
         'intro': (context) => const IntroScreen(),
         'splash': (context) => const SplashScreen(),
