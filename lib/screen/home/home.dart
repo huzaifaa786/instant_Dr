@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant_doctor/api/auth.dart';
 import 'package:instant_doctor/api/specialty.dart';
 import 'package:instant_doctor/model/speciality.dart';
+import 'package:instant_doctor/screen/Settings/profile/edit_profile.dart';
 import 'package:instant_doctor/screen/Settings/setting_screen.dart';
 import 'package:instant_doctor/screen/auth/login.dart';
 import 'package:instant_doctor/screen/doctor_list/doctor_list.dart';
@@ -148,10 +150,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: LargeButtons(
                           title: 'Find Doctor',
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => DoctorList(
-                                    id: speciality!.id!,
-                                    name: speciality!.name!)));
+                            if (speciality == null) {
+                              Fluttertoast.showToast(
+                                  msg: "Select Speciality To find Doctor");
+                            } else {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => DoctorList(
+                                      id: speciality!.id!,
+                                      name: speciality!.name!)));
+                            }
                           },
                         ),
                       ),
@@ -169,11 +176,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {},
                       ),
                       LargeButtonss(
-                        title: 'Settings',
-                        icon: Icons.settings,
+                        title: 'Profile',
+                        icon: Icons.person_outlined,
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SettingScreen()));
+                              builder: (context) => EditProfile()));
                         },
                       ),
                       LargeButtonss(
