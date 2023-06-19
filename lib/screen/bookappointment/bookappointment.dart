@@ -223,7 +223,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                         children: [
                           DateTimePicker(
                             decoration: InputDecoration(
-                                filled: true, //<-- SEE HERE
+                                filled: true, 
                                 fillColor: Colors.grey[200],
                                 suffixIcon: Icon(Icons.keyboard_arrow_down),
                                 border: InputBorder.none,
