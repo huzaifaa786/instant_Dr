@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
       title: "Klicks",
-      initialRoute: 'bookappointment',
+      initialRoute: 'splash',
       routes: {
         'intro': (context) => const IntroScreen(),
         'splash': (context) => const SplashScreen(),
@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         'setting': (context) => const SettingScreen(),
         'signup':(context) => const SignUpScreen(),
         'home': (context) => const HomeScreen(),
-        'bookappointment':(context) => const BookAppointment(),
+        // 'bookappointment':(context) => const BookAppointment(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),
