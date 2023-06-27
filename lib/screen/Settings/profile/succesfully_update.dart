@@ -72,7 +72,7 @@ class _BookingConfirmState extends State<BookingConfirm> {
                           title: 'Back to home',
                           screenRatio: 0.75,
                           onPressed: () {
-                            // Navigator.pushNamed(context, 'home');
+                            Navigator.pushNamed(context, 'home');
                           },
                         ),
                       )

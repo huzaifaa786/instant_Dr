@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:instant_doctor/helpers/loading.dart';
@@ -58,13 +58,25 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: const Center(
-          child: Image(
-            image: AssetImage(
-              'assets/images/Icon.png',
-            ),
-            height: 350,
-            width: 350,
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image(
+                image: AssetImage(
+                  'assets/images/doctor.png',
+                ),
+                height: 60,
+                width: 60,
+              ),
+              Text(
+                "Find Doctors",
+                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              )
+            ],
           ),
         ),
       ),

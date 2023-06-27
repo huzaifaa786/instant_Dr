@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant_doctor/api/auth.dart';
 import 'package:instant_doctor/api/specialty.dart';
-import 'package:instant_doctor/model/doctor.dart';
 import 'package:instant_doctor/model/speciality.dart';
+import 'package:instant_doctor/screen/Settings/profile/edit_profile.dart';
+import 'package:instant_doctor/screen/Settings/setting_screen.dart';
 import 'package:instant_doctor/screen/auth/login.dart';
+import 'package:instant_doctor/screen/doctor_list/doctor_list.dart';
 import 'package:instant_doctor/static/button.dart';
 import 'package:instant_doctor/static/drop_down.dart';
 import 'package:instant_doctor/static/roundedbutton.dart';
@@ -20,22 +23,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<dynamic> specialities = [];
   Speciality? speciality;
-  List<dynamic> doctors = [];
-  Doctor? doctor;
 
   getspeciality() async {
     specialities = [];
     var mspecialities = await SpecialityApi.getspecialities();
     setState(() {
       specialities = mspecialities;
-    });
-  }
-
-  getdoctors(id) async {
-    var mDoctors = await SpecialityApi.getdoctor(id);
-    setState(() {
-      doctor = null;
-      doctors = mDoctors;
     });
   }
 
@@ -149,16 +142,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         onChange: (value) {
                           setState(() {
                             speciality = value;
-                            doctors = [];
                           });
-                          getdoctors(value.id);
                         },
                       ),
                       SizedBox(height: 14),
                       Center(
                         child: LargeButtons(
                           title: 'Find Doctor',
-                          onPressed: () {},
+                          onPressed: () {
+                            if (speciality == null) {
+                              Fluttertoast.showToast(
+                                  msg: "Select Speciality To find Doctor");
+                            } else {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => DoctorList(
+                                      id: speciality!.id!,
+                                      name: speciality!.name!)));
+                            }
+                          },
                         ),
                       ),
                       SizedBox(height: 20),
@@ -173,6 +174,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: 'My Appointments',
                         icon: Icons.arrow_circle_right_rounded,
                         onPressed: () {},
+                      ),
+                      LargeButtonss(
+                        title: 'Profile',
+                        icon: Icons.person_outlined,
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => EditProfile()));
+                        },
                       ),
                       LargeButtonss(
                         title: 'Logout',

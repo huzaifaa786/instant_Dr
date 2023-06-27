@@ -14,7 +14,6 @@ class User {
     email = user['email'];
     apiToken = user['api_token'] ?? '';
     phone = user['phone'];
-    image = user['profilepic'];
-    location = user['location'];
+    image = user['profilepic'] ?? '';
   }
 }
