@@ -36,8 +36,8 @@ class LargeButtonss extends StatelessWidget {
           height: 60,
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.all(Radius.circular(30))),
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.all(Radius.circular(20))),
             child: Padding(
               padding: const EdgeInsets.only(left: 19,right: 19),
               child: Row(

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:instant_doctor/helpers/loading.dart';
 import 'package:instant_doctor/screen/auth/signup.dart';
+import 'package:instant_doctor/screen/bookappointment/bookappointment.dart';
 import 'package:instant_doctor/screen/doctor_list/doctor_list.dart';
 import 'package:instant_doctor/screen/home/home.dart';
 import 'package:instant_doctor/screen/auth/login.dart';
 import 'package:instant_doctor/screen/intro/intro.dart';
 import 'package:instant_doctor/screen/Settings/setting_screen.dart';
+import 'package:instant_doctor/screen/splash_screen/splash.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -26,7 +30,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // LoadingHelper.onChangeAbsorbClick = update;
+    LoadingHelper.onChangeAbsorbClick = update;
     super.initState();
   }
 
@@ -34,14 +38,18 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      builder: EasyLoading.init(),
       title: "Klicks",
-      initialRoute: 'list',
+      initialRoute: 'splash',
       routes: {
         'intro': (context) => const IntroScreen(),
+        'splash': (context) => const SplashScreen(),
         'login': (context) => const LoginScreen(),
         'setting': (context) => const SettingScreen(),
-         'home': (context) => const HomeScreen(),
-          'list': (context) => const DoctorList(),
+        'signup':(context) => const SignUpScreen(),
+        'home': (context) => const HomeScreen(),
+        'list': (context) => const DoctorList(),
+        'bookappointment':(context) => const BookAppointment(),
         // 'home': (context) => const BottomNavScreen(),
         // 'booking_confirm': (context) => const BookingConfirm(),
         // 'order_status': (context) => const OrderStatus(),
