@@ -1,6 +1,7 @@
-// ignore_for_file: avoid_print, prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: avoid_print, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/material.dart';
+import 'package:instant_doctor/model/doctor.dart';
 import 'package:instant_doctor/static/topbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instant_doctor/static/button.dart';
@@ -8,7 +9,9 @@ import 'package:instant_doctor/values/colors.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 class BookAppointment extends StatefulWidget {
-  const BookAppointment({super.key});
+  const BookAppointment({super.key, required this.doctor, required this.name});
+  final Doctor doctor;
+  final String name;
 
   @override
   State<BookAppointment> createState() => _BookAppointmentState();
@@ -16,8 +19,17 @@ class BookAppointment extends StatefulWidget {
 
 class _BookAppointmentState extends State<BookAppointment> {
   String valueChanged4 = '';
+
   @override
   Widget build(BuildContext context) {
+    String mon = widget.doctor.isMondayAvailable == false ? '' : "Mon, ";
+    String tuesday = widget.doctor.isTuesdayAvailable == false ? '' : "Tue, ";
+    String wed = widget.doctor.isWednesdayAvailable == false ? '' : "Wed, ";
+    String thursday =
+        widget.doctor.isThursdayAvailable == false ? '' : "Thur, ";
+    String friday = widget.doctor.isFridayAvailable == false ? '' : "Fri, ";
+    String sat = widget.doctor.isSaturdayAvailable == false ? '' : "Sat, ";
+    String sunday = widget.doctor.isSundayAvailable == false ? '' : "Sun";
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -110,22 +122,38 @@ class _BookAppointmentState extends State<BookAppointment> {
                               padding: const EdgeInsets.only(right: 8),
                               child: Icon(Icons.access_time_rounded),
                             ),
-                            Text(
-                              'Mon-Thu  ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 17,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.32,
+                              child: Text(
+                                mon +
+                                    tuesday +
+                                    wed +
+                                    thursday +
+                                    friday +
+                                    sat +
+                                    sunday,
+                                maxLines: null,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 17,
+                                ),
                               ),
                             ),
                             Icon(
                               Icons.circle,
                               size: 7,
                             ),
-                            Text(
-                              '  10:00AM - 03:30pM',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 17,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              child: Text(
+                                widget.doctor.start_time.toString() +
+                                    ' | ' +
+                                    widget.doctor.end_time.toString(),
+                                maxLines: null,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 17,
+                                ),
                               ),
                             ),
                           ],
@@ -142,17 +170,21 @@ class _BookAppointmentState extends State<BookAppointment> {
                         children: [
                           Column(
                             children: [
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(24),
-                                    color: Colors.black45),
-                                child: Image.asset(
-                                  'assets/images/doctor.png',
-                                  height: 50,
-                                  width: 50,
-                                  fit: BoxFit.scaleDown,
-                                ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: widget.doctor.image == null
+                                    ? Image.asset(
+                                        'assets/images/5907.jpg',
+                                        height: 60,
+                                        width: 60,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image(
+                                        image:
+                                            NetworkImage(widget.doctor.image!),
+                                        height: 60,
+                                        width: 60,
+                                        fit: BoxFit.cover),
                               )
                             ],
                           ),
@@ -162,21 +194,21 @@ class _BookAppointmentState extends State<BookAppointment> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Dr.Neda Imran',
+                                  'Dr.' + widget.doctor.name!,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 17,
                                   ),
                                 ),
                                 Text(
-                                  'Denist',
+                                  widget.name,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 17,
                                       color: Colors.grey),
                                 ),
                                 Text(
-                                  'Sadiq Hospital Sargodha',
+                                  widget.doctor.location!,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 17,
@@ -204,8 +236,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                             ),
                             Container(
                                 width: MediaQuery.of(context).size.width * 0.79,
-                                child: Text(
-                                    "Sadiq Hospital Satellite Town Sargodha, Pakistan")),
+                                child: Text(widget.doctor.location!)),
                           ],
                         ),
                       ),
@@ -229,18 +260,13 @@ class _BookAppointmentState extends State<BookAppointment> {
                                 border: InputBorder.none,
                                 hintText: 'Select Date For Consultation'),
                             type: DateTimePickerType.date,
-                            dateMask: 'd MMM, yyyy',
-                            // initialValue: DateTime.now().toString(),
-                            firstDate: DateTime(2000),
+                            dateMask: 'dd MMM, yyyy',
+                            firstDate: DateTime.now(),
                             lastDate: DateTime(2100),
                             icon: Icon(Icons.event),
                             dateLabelText: 'Date',
                             timeLabelText: "Time",
-              
                             selectableDayPredicate: (date) {
-                              if (date.weekday == 6 || date.weekday == 7) {
-                                return false;
-                              }
                               return true;
                             },
                             onChanged: (val) => print(val),
@@ -251,7 +277,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                             onSaved: (val) => print(val),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 10,bottom: 10),
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: DateTimePicker(
                               type: DateTimePickerType.time,
                               decoration: InputDecoration(

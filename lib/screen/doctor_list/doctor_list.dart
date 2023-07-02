@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:instant_doctor/api/specialty.dart';
+import 'package:instant_doctor/model/doctor.dart';
+import 'package:instant_doctor/screen/bookappointment/bookappointment.dart';
 import 'package:instant_doctor/static/doctorcard.dart';
 import 'package:instant_doctor/static/topbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,7 +18,7 @@ class DoctorList extends StatefulWidget {
 }
 
 class _DoctorListState extends State<DoctorList> {
-  List<dynamic> doctors = [];
+  List<Doctor> doctors = [];
   getdoctors(id) async {
     var mDoctors = await SpecialityApi.getdoctor(id);
     setState(() {
@@ -128,14 +130,18 @@ class _DoctorListState extends State<DoctorList> {
                               fit: BoxFit.cover,
                             )
                           : Image(
-                              image: NetworkImage(doctors[index].image),
+                              image: NetworkImage(doctors[index].image!),
                               height: 50,
                               width: 50,
                               fit: BoxFit.cover),
                       name: doctors[index].name,
                       add: doctors[index].location,
                       speciality: widget.name,
-                      ontap: () {},
+                      ontap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BookAppointment(
+                                doctor: doctors[index], name: widget.name)));
+                      },
                     );
                   }),
             ),
