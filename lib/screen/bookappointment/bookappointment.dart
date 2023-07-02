@@ -1,12 +1,19 @@
 // ignore_for_file: avoid_print, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable, prefer_interpolation_to_compose_strings
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:instant_doctor/api/strip.dart';
+import 'package:instant_doctor/helpers/loading.dart';
+import 'package:instant_doctor/helpers/shared_pref.dart';
 import 'package:instant_doctor/model/doctor.dart';
 import 'package:instant_doctor/static/topbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instant_doctor/static/button.dart';
 import 'package:instant_doctor/values/colors.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 class BookAppointment extends StatefulWidget {
   const BookAppointment({super.key, required this.doctor, required this.name});
@@ -19,6 +26,66 @@ class BookAppointment extends StatefulWidget {
 
 class _BookAppointmentState extends State<BookAppointment> {
   String valueChanged4 = '';
+  String? intent;
+
+  paayment() async {
+    LoadingHelper.show();
+
+    var data = await StripeApi.paymentIntent(int.parse(widget.doctor.fee!));
+    data = jsonDecode(data.toString());
+    setState(() {
+      intent = data['intent']['id'];
+    });
+    await Stripe.instance.initPaymentSheet(
+      paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: data['paymentIntent'],
+        merchantDisplayName: 'IntantDoctor',
+        // customFlow: true,
+        // Customer params
+        // customerId: data['customer'].toString(),
+        // customerEphemeralKeySecret: data['ephemeralKey'].toString(),
+        // Extra params
+        applePay: PaymentSheetApplePay(merchantCountryCode: 'Pk'),
+        googlePay: PaymentSheetGooglePay(
+          merchantCountryCode: 'Pk',
+          currencyCode: 'PKR',
+          testEnv: true,
+        ),
+        style: ThemeMode.dark,
+        // customFlow: true
+        // billingDetails: billingDetails,
+      ),
+    );
+    LoadingHelper.dismiss();
+    confirmPayment();
+  }
+
+  Future<bool> confirmPayment() async {
+    print("Asdfasdfsdfasfd");
+
+    try {
+      // 3. display the payment sheet.
+      await Stripe.instance.presentPaymentSheet();
+      print('object');
+      orderPlaced();
+      Fluttertoast.showToast(msg: 'Payment succesfully completed');
+      return true;
+    } on Exception catch (e) {
+      if (e is StripeException) {
+        print('adsfasdfasdfadsfadsfa');
+        Fluttertoast.showToast(
+            msg: 'Error from Stripe: ${e.error.localizedMessage}');
+        return false;
+      } else {
+        Fluttertoast.showToast(msg: 'Unforeseen error: ${e}');
+        return false;
+      }
+    }
+  }
+
+  orderPlaced() async {
+    var token = await SharedPreferencesHelper.getString('api_token');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +321,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                         children: [
                           DateTimePicker(
                             decoration: InputDecoration(
-                                filled: true, 
+                                filled: true,
                                 fillColor: Colors.grey[200],
                                 suffixIcon: Icon(Icons.keyboard_arrow_down),
                                 border: InputBorder.none,
@@ -312,6 +379,10 @@ class _BookAppointmentState extends State<BookAppointment> {
                       Padding(
                         padding: const EdgeInsets.only(left: 23, top: 15),
                         child: LargeButtons(
+                          onPressed: () async {
+                            setState(() {});
+                            await paayment();
+                          },
                           title: 'Book Appointment',
                           color: mainColor,
                           screenRatio: 0.7,
