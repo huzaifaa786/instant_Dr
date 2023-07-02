@@ -48,21 +48,22 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Container(
-                      padding: const EdgeInsets.all(5.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Color(0xFF34607B)),
-                        borderRadius: BorderRadius.circular(90),
-                      ),
-                      child: Image.asset('assets/images/Icon.png')),
-                ),
-              ],
-            ),
+            SizedBox(height: 25,),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     Padding(
+            //       padding: const EdgeInsets.all(2.0),
+            //       child: Container(
+            //           padding: const EdgeInsets.all(5.0),
+            //           decoration: BoxDecoration(
+            //             border: Border.all(width: 1, color: Color(0xFF34607B)),
+            //             borderRadius: BorderRadius.circular(90),
+            //           ),
+            //           child: Image.asset('assets/images/Icon.png')),
+            //     ),
+            //   ],
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -104,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 13,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.55,
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                 color: Colors.white,
