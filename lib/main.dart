@@ -11,7 +11,7 @@ import 'package:instant_doctor/screen/splash_screen/splash.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
 void main() async {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   Stripe.publishableKey =
       'pk_test_51JvIZ1Ey3DjpASZjPAzcOwqhblOq2hbchp6i56BsjapvhWcooQXqh33XwCrKiULfAe7NKFwKUhn2nqURE7VZcXXf00wMDzp4YN';
   Stripe.merchantIdentifier = 'merchant.flutter.stripe';
