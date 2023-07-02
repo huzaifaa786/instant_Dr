@@ -3,16 +3,20 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:instant_doctor/helpers/loading.dart';
 import 'package:instant_doctor/screen/appointment/appointment.dart';
 import 'package:instant_doctor/screen/auth/signup.dart';
-import 'package:instant_doctor/screen/bookappointment/bookappointment.dart';
-import 'package:instant_doctor/screen/doctor_list/doctor_list.dart';
 import 'package:instant_doctor/screen/home/home.dart';
 import 'package:instant_doctor/screen/auth/login.dart';
 import 'package:instant_doctor/screen/intro/intro.dart';
 import 'package:instant_doctor/screen/Settings/setting_screen.dart';
 import 'package:instant_doctor/screen/splash_screen/splash.dart';
-import 'package:intl/date_symbol_data_file.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 void main() async {
+   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey =
+      'pk_test_51JvIZ1Ey3DjpASZjPAzcOwqhblOq2hbchp6i56BsjapvhWcooQXqh33XwCrKiULfAe7NKFwKUhn2nqURE7VZcXXf00wMDzp4YN';
+  Stripe.merchantIdentifier = 'merchant.flutter.stripe';
+  Stripe.urlScheme = 'flutterstripe';
+  await Stripe.instance.applySettings();
   runApp(const MyApp());
 }
 
@@ -49,7 +53,7 @@ class _MyAppState extends State<MyApp> {
         'splash': (context) => const SplashScreen(),
         'login': (context) => const LoginScreen(),
         'setting': (context) => const SettingScreen(),
-        'signup':(context) => const SignUpScreen(),
+        'signup': (context) => const SignUpScreen(),
         'home': (context) => const HomeScreen(),
         // 'bookappointment':(context) => const BookAppointment(),
         // 'home': (context) => const BottomNavScreen(),

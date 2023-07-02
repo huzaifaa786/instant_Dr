@@ -8,6 +8,7 @@ class Doctor {
   String? phone;
   String? image;
   String? location;
+  String? fee;
   String? end_time;
   String? start_time;
   Map<String, bool>? days;
@@ -27,6 +28,7 @@ class Doctor {
     end_time = doctor['end_time'];
     image = doctor['image'];
     location = doctor['address'];
+    fee = doctor['fee'];
     days = Map<String, bool>.from(doctor['days'] ?? {});
     if (days != null) {
       isMondayAvailable = days!['monday'] ?? false;
