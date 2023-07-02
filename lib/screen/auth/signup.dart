@@ -112,7 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hint: 'Enter Your E-Mail',
                     controller: email,
                     type: TextInputType.emailAddress,
-                    onchange: onEmailChanged),
+                    onChange: onEmailChanged),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 11),
