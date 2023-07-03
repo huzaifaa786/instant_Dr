@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant_doctor/api/auth.dart';
 import 'package:instant_doctor/api/specialty.dart';
+import 'package:instant_doctor/model/city.dart';
 import 'package:instant_doctor/model/speciality.dart';
 import 'package:instant_doctor/screen/Settings/profile/edit_profile.dart';
-import 'package:instant_doctor/screen/Settings/setting_screen.dart';
+import 'package:instant_doctor/screen/ambulance_screen/ambulance_screen.dart';
+import 'package:instant_doctor/screen/appointment/appointment.dart';
 import 'package:instant_doctor/screen/auth/login.dart';
 import 'package:instant_doctor/screen/doctor_list/doctor_list.dart';
 import 'package:instant_doctor/static/button.dart';
 import 'package:instant_doctor/static/drop_down.dart';
 import 'package:instant_doctor/static/roundedbutton.dart';
+import 'package:instant_doctor/static/city_dropdown.dart';
+import 'package:instant_doctor/values/colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,13 +26,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<dynamic> specialities = [];
+  List<dynamic> cities = [];
   Speciality? speciality;
+  City? city;
 
   getspeciality() async {
     specialities = [];
     var mspecialities = await SpecialityApi.getspecialities();
     setState(() {
+      speciality = null;
       specialities = mspecialities;
+    });
+  }
+
+  getcity() async {
+    cities = [];
+    var mcities = await SpecialityApi.getcities();
+    setState(() {
+      cities = mcities;
     });
   }
 
@@ -36,34 +51,119 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      getspeciality();
+      getcity();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: mainColor,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: mainColor,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/doctor.png',
+                    height: 70,
+                  ),
+                  Text(
+                    'Instant Dr',
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('My Appointments',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Icon(Icons.arrow_circle_right_rounded)
+                ],
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => Appointment()));
+              },
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Profile',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Icon(Icons.person_outlined)
+                ],
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => EditProfile()));
+              },
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Ambulances',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Icon(Icons.warning_amber_outlined)
+                ],
+              ),
+              onTap: () async {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AmbulanceScreen()));
+              },
+            ),
+            ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Logout',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Icon(Icons.logout_outlined)
+                ],
+              ),
+              onTap: () async {
+                await AuthApi.logout();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    (Route<dynamic> route) => false);
+              },
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
-            SizedBox(height: 25,),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //     Padding(
-            //       padding: const EdgeInsets.all(2.0),
-            //       child: Container(
-            //           padding: const EdgeInsets.all(5.0),
-            //           decoration: BoxDecoration(
-            //             border: Border.all(width: 1, color: Color(0xFF34607B)),
-            //             borderRadius: BorderRadius.circular(90),
-            //           ),
-            //           child: Image.asset('assets/images/Icon.png')),
-            //     ),
-            //   ],
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [],
+            ),
+            SizedBox(
+              height: 12,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -105,7 +205,6 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 13,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.55,
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -130,11 +229,23 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 30,
                       ),
                       Text(
-                        'Search Doctor By Speciality',
+                        'Search Doctor By City & Speciality',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
                             color: Colors.black),
+                      ),
+                      CityDropdownField(
+                        text: 'Choose City',
+                        selectedvalue: city,
+                        items: cities.toList(),
+                        onChange: (value) {
+                          setState(() {
+                            city = value;
+                            specialities = [];
+                          });
+                          getspeciality();
+                        },
                       ),
                       DropdownField(
                         text: 'Choose Speciality',
@@ -151,50 +262,26 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: LargeButtons(
                           title: 'Find Doctor',
                           onPressed: () {
-                            if (speciality == null) {
+                            if (city == null) {
                               Fluttertoast.showToast(
-                                  msg: "Select Speciality To find Doctor");
+                                  msg: "Select City To find Doctor");
                             } else {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => DoctorList(
-                                      id: speciality!.id!,
-                                      name: speciality!.name!)));
+                              if (speciality == null) {
+                                Fluttertoast.showToast(
+                                    msg: "Select Speciality To find Doctor");
+                              } else {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => DoctorList(
+                                        id: speciality!.id!,
+                                        name: speciality!.name!,
+                                        cityName: city!.name!,
+                                        cityId: city!.id!)));
+                              }
                             }
                           },
                         ),
                       ),
                       SizedBox(height: 20),
-                      Text(
-                        'Our Services',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            color: Colors.black),
-                      ),
-                      LargeButtonss(
-                        title: 'My Appointments',
-                        icon: Icons.arrow_circle_right_rounded,
-                        onPressed: () {},
-                      ),
-                      LargeButtonss(
-                        title: 'Profile',
-                        icon: Icons.person_outlined,
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => EditProfile()));
-                        },
-                      ),
-                      LargeButtonss(
-                        title: 'Logout',
-                        icon: Icons.logout_outlined,
-                        onPressed: () async {
-                          await AuthApi.logout();
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()),
-                              (Route<dynamic> route) => false);
-                        },
-                      )
                     ],
                   ),
                 ),

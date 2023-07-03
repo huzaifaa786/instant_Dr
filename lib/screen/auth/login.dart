@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
         emailController.text.toString(),
         passwordController.text.toString(),
       )) {
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }
     }

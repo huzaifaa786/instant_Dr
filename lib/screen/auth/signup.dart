@@ -56,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 email.text.toString(),
                 phone.text.toString(),
                 password.text.toString())) {
-              Navigator.push(context,
+              Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => HomeScreen()));
             } else {
               Fluttertoast.showToast(msg: 'Error!');

@@ -7,14 +7,14 @@ import 'dart:ui' as ui;
 
 import 'package:instant_doctor/static/topbar.dart';
 
-class BookingConfirm extends StatefulWidget {
-  const BookingConfirm({super.key});
+class OrderBooked extends StatefulWidget {
+  const OrderBooked({super.key});
 
   @override
-  State<BookingConfirm> createState() => _BookingConfirmState();
+  State<OrderBooked> createState() => _OrderBookedState();
 }
 
-class _BookingConfirmState extends State<BookingConfirm> {
+class _OrderBookedState extends State<OrderBooked> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +49,7 @@ class _BookingConfirmState extends State<BookingConfirm> {
                         padding: EdgeInsets.only(top: 30),
                         width: MediaQuery.of(context).size.width *0.7,
                         child: Text(
-                          'Your Information has been successfully updated',
+                          'Your Order has placed succesfully',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.green,

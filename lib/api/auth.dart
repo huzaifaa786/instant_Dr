@@ -25,6 +25,8 @@ class AuthApi {
     LoadingHelper.dismiss();
     if (!response['error']) {
       User user = User(response['user']);
+      final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('id', user.id!);
       SharedPreferencesHelper.setString('api_token', user.apiToken!);
       return true;
     } else {
@@ -54,6 +56,8 @@ class AuthApi {
     LoadingHelper.dismiss();
     if (!response['error']) {
       User user = User(response['user']);
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('id', user.id!);
       SharedPreferencesHelper.setString('api_token', user.apiToken!);
       return true;
     } else {

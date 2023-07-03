@@ -1,7 +1,10 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 class Doctor {
   int? id;
+  int? hospital_id;
   String? name;
   String? email;
   String? apiToken;
@@ -22,6 +25,7 @@ class Doctor {
 
   Doctor(doctor) {
     id = doctor['id'];
+    hospital_id = doctor['hospital_id'];
     name = doctor['name'];
     start_time = doctor['start_time'];
     apiToken = doctor['api_token'] ?? '';

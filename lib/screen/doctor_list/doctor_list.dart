@@ -9,9 +9,16 @@ import 'package:instant_doctor/static/topbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DoctorList extends StatefulWidget {
-  const DoctorList({super.key, required this.id, required this.name});
+  const DoctorList(
+      {super.key,
+      required this.id,
+      required this.name,
+      required this.cityName,
+      required this.cityId});
   final int id;
   final String name;
+  final String cityName;
+  final int cityId;
 
   @override
   State<DoctorList> createState() => _DoctorListState();
@@ -19,8 +26,8 @@ class DoctorList extends StatefulWidget {
 
 class _DoctorListState extends State<DoctorList> {
   List<Doctor> doctors = [];
-  getdoctors(id) async {
-    var mDoctors = await SpecialityApi.getdoctor(id);
+  getdoctors(id, cityId) async {
+    var mDoctors = await SpecialityApi.getdoctor(id, cityId);
     setState(() {
       doctors = mDoctors;
     });
@@ -30,7 +37,7 @@ class _DoctorListState extends State<DoctorList> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      getdoctors(widget.id);
+      getdoctors(widget.id, widget.cityId);
     });
   }
 
@@ -72,7 +79,7 @@ class _DoctorListState extends State<DoctorList> {
                               fontWeight: FontWeight.w700, fontSize: 23),
                         ),
                         Text(
-                          'Doctor in Sargodha',
+                          'Doctor in ' +  widget.cityName,
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 17,

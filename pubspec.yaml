@@ -46,6 +46,8 @@ dependencies:
   date_time_picker: ^2.1.0
   intl: ^0.17.0
   flutter_stripe: ^9.2.2
+  image_picker: ^1.0.0
+  flutter_phone_direct_caller: ^2.1.1
 
 dev_dependencies:
   flutter_test:

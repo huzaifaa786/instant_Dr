@@ -1,13 +1,15 @@
-// ignore_for_file: avoid_print, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable, prefer_interpolation_to_compose_strings
+// ignore_for_file: avoid_print, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable, prefer_interpolation_to_compose_strings, use_build_context_synchronously
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:instant_doctor/api/order.dart';
 import 'package:instant_doctor/api/strip.dart';
 import 'package:instant_doctor/helpers/loading.dart';
 import 'package:instant_doctor/helpers/shared_pref.dart';
 import 'package:instant_doctor/model/doctor.dart';
+import 'package:instant_doctor/screen/bookappointment/order_placed.dart';
 import 'package:instant_doctor/static/topbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instant_doctor/static/button.dart';
@@ -27,12 +29,13 @@ class BookAppointment extends StatefulWidget {
 class _BookAppointmentState extends State<BookAppointment> {
   String valueChanged4 = '';
   String? intent;
+  String? date = '';
+  TextEditingController nameController = TextEditingController();
 
   paayment() async {
     LoadingHelper.show();
 
     var data = await StripeApi.paymentIntent(int.parse(widget.doctor.fee!));
-    data = jsonDecode(data.toString());
     setState(() {
       intent = data['intent']['id'];
     });
@@ -61,10 +64,7 @@ class _BookAppointmentState extends State<BookAppointment> {
   }
 
   Future<bool> confirmPayment() async {
-    print("Asdfasdfsdfasfd");
-
     try {
-      // 3. display the payment sheet.
       await Stripe.instance.presentPaymentSheet();
       print('object');
       orderPlaced();
@@ -72,7 +72,6 @@ class _BookAppointmentState extends State<BookAppointment> {
       return true;
     } on Exception catch (e) {
       if (e is StripeException) {
-        print('adsfasdfasdfadsfadsfa');
         Fluttertoast.showToast(
             msg: 'Error from Stripe: ${e.error.localizedMessage}');
         return false;
@@ -84,7 +83,21 @@ class _BookAppointmentState extends State<BookAppointment> {
   }
 
   orderPlaced() async {
-    var token = await SharedPreferencesHelper.getString('api_token');
+    if (await OrderApi.placeorder(
+      date,
+      valueChanged4,
+      widget.doctor.id,
+      nameController.text.toString(),
+      widget.doctor.hospital_id,
+      widget.doctor.fee!,
+    )) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => OrderBooked()),
+      );
+    } else {
+      Fluttertoast.showToast(msg: 'Error');
+    }
   }
 
   @override
@@ -282,7 +295,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                                       color: Colors.grey),
                                 ),
                                 Text(
-                                  'Fee:RS 1300',
+                                  'Fee:RS ' + widget.doctor.fee!,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 17,
@@ -327,7 +340,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                                 border: InputBorder.none,
                                 hintText: 'Select Date For Consultation'),
                             type: DateTimePickerType.date,
-                            dateMask: 'dd MMM, yyyy',
+                            // dateMask: 'dd MMM, yyyy',
                             firstDate: DateTime.now(),
                             lastDate: DateTime(2100),
                             icon: Icon(Icons.event),
@@ -336,7 +349,12 @@ class _BookAppointmentState extends State<BookAppointment> {
                             selectableDayPredicate: (date) {
                               return true;
                             },
-                            onChanged: (val) => print(val),
+                            onChanged: (val) {
+                              date = val;
+                              setState(() {
+                                print(date);
+                              });
+                            },
                             validator: (val) {
                               print(val);
                               return null;
@@ -368,6 +386,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                             ),
                           ),
                           TextFormField(
+                            controller: nameController,
                             decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
@@ -380,8 +399,21 @@ class _BookAppointmentState extends State<BookAppointment> {
                         padding: const EdgeInsets.only(left: 23, top: 15),
                         child: LargeButtons(
                           onPressed: () async {
-                            setState(() {});
-                            await paayment();
+                            if (date != '') {
+                              if (valueChanged4 != '') {
+                                if (nameController.text.isNotEmpty) {
+                                  setState(() {});
+                                  await paayment();
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: 'Patient Name Required');
+                                }
+                              } else {
+                                Fluttertoast.showToast(msg: 'Time Required');
+                              }
+                            } else {
+                              Fluttertoast.showToast(msg: 'Date Required');
+                            }
                           },
                           title: 'Book Appointment',
                           color: mainColor,
