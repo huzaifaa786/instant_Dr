@@ -6,6 +6,7 @@ import 'package:instant_doctor/api/auth.dart';
 import 'package:instant_doctor/screen/auth/signup.dart';
 import 'package:instant_doctor/screen/home/home.dart';
 import 'package:instant_doctor/static/inputfield.dart';
+import 'package:instant_doctor/static/inputfieldd.dart';
 import 'package:instant_doctor/static/button.dart';
 import 'package:instant_doctor/values/colors.dart';
 
@@ -17,6 +18,20 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _obscureText = true;
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  int index = 0;
+  toggleFun(state) {
+    setState(() {
+      index = state;
+    });
+  }
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -65,14 +80,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   hint: 'Enter Your Email:',
                   controller: emailController,
                   type: TextInputType.emailAddress,
-
                 ),
               ),
-              InputField(
+              InputField2(
                 hint: 'Enter Your Password:',
-                obscure: true,
+                toggle: _toggle,
+                obscure: _obscureText,
                 controller: passwordController,
-
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10, top: 28),

@@ -7,6 +7,7 @@ import 'package:instant_doctor/screen/auth/login.dart';
 import 'package:instant_doctor/screen/home/home.dart';
 import 'package:instant_doctor/static/inputfield.dart';
 import 'package:instant_doctor/static/button.dart';
+import 'package:instant_doctor/static/inputfieldd.dart';
 import 'package:instant_doctor/values/colors.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -73,6 +74,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+  bool _obscureText = true;
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  int index = 0;
+  toggleFun(state) {
+    setState(() {
+      index = state;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,18 +139,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 11),
-                child: InputField(
+                child: InputField2(
                   hint: 'Enter Your Password:',
                   controller: password,
-                  obscure: true,
+                  toggle: _toggle,
+                  obscure: _obscureText,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 11),
-                child: InputField(
+                child: InputField2(
                   hint: 'Conform Password',
                   controller: cpassword,
-                  obscure: true,
+                  toggle: _toggle,
+                  obscure: _obscureText,
                 ),
               ),
               Padding(

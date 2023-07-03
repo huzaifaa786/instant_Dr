@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-class InputField extends StatelessWidget {
-  const InputField(
+class InputField2 extends StatelessWidget {
+  const InputField2(
       {Key? key,
       this.controller,
       this.hint,
@@ -67,7 +67,15 @@ class InputField extends StatelessWidget {
           filled: true,
           fillColor: Colors.white,
           hintText: hint,
-           
+             suffixIcon: GestureDetector(
+            onTap: (){
+              toggle();
+            },
+            child: Icon(
+                obscure ? Icons.visibility_off_outlined: Icons.visibility_outlined ,
+                color: Colors.black,
+              ),
+          ),
           contentPadding: const EdgeInsets.only(left: 12.0, right: 12),
           hintStyle: TextStyle(color: Colors.grey),
           enabledBorder: OutlineInputBorder(
